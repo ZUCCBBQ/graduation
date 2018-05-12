@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven>
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!--<mvc:default-servlet-handler/>-->
+
+    <!--开启包扫描-->
+    <context:component-scan base-package="course.graduation.service,course.graduation.web.controller"/>
+
+
+    <!--配置FreeMarkerConfigurer-->
+    <!--<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">-->
+        <!--<property name="templateLoaderPath">-->
+            <!--<value>html</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--<bean id="htmlviewResolver"-->
+          <!--class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">-->
+        <!--<property name="suffix" value=".html" />-->
+        <!--<property name="order" value="0"></property>-->
+        <!--<property name="contentType" value="text/html;charset=UTF-8"></property>-->
+
+    <!--</bean>-->
+
+
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="defaultViews">
+            <list>
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"></property>
+        <property name="prefix" value="/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+        <property name="order" value="0"></property>
+    </bean>
+    <!--<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">-->
+        <!--<property name="viewResolvers">-->
+            <!--<list>-->
+                <!--&lt;!&ndash;<bean id="freeMarkerViewResolver"&ndash;&gt;-->
+                      <!--&lt;!&ndash;class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<property name="prefix" value=""/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<property name="suffix" value=".ftl"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<property name="cache" value="true"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<property name="contentType" value="text/html;charset=utf-8"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<property name="order" value="0"/>&lt;!&ndash;优先级&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+
+                <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+                <!--<property name="suffix" value=".html"/>-->
+                <!--<property name="prefix" value="resourses/html"/>-->
+                <!--<property name="contentType" value="text/html;charset=utf-8"/>-->
+                <!--<property name="order" value="1"/>-->
+                <!--</bean>-->
+
+            <!--</list>-->
+        <!--</property>-->
+
+        <!--<property name="defaultViews">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSize" value="5400000"/>
+        <property name="uploadTempDir" value="img"/>
+    </bean>
+
+</beans>

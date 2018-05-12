@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="course.graduation.dao.STandCOdao">
+    <resultMap type="course.graduation.model.STandCO" id="AllUser">
+        <result column="id_student" property="studentid" />
+        <result column="id_company" property="companyid" />
+    </resultMap>
+    <select id="getstudentlist" resultMap="AllUser">
+        select * from student_company WHERE  id_company =#{companyid}
+    </select>
+    <select id="getbystid" resultMap="AllUser">
+        select * from student_company WHERE  id_student =#{studentid}
+    </select>
+
+    <insert id="studentinsert" parameterType="course.graduation.model.STandCO">
+        insert into student_company (id_student,id_company)
+        values
+              (#{studentid},#{companyid}
+              )
+    </insert>
+
+
+</mapper>

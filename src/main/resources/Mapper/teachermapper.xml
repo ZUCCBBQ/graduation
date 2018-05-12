@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="course.graduation.dao.teacherdao">
+    <resultMap type="course.graduation.model.teacher" id="teacherIF">
+        <id column="id_teacher" property="teacherid" />
+        <result column="sex_teacher" property="sex" />
+        <result column="name_teacher" property="name" />
+        <result column="office_teacher" property="officeplace"/>
+        <result column="introduce_teacher" property="introduce"/>
+        <result column="email_teacher" property="email"/>
+        <result column="tel_teacher" property="phone"/>
+        <result column="password_teacher" property="password"/>
+    </resultMap>
+    <!--<select id="GetUser" resultType="course.graduation.model.users">-->
+            <!--select * from users WHERE  id_users =#{userid}-->
+    <!--</select>-->
+    <select id="Getinformation" resultMap="teacherIF">
+        select * from teacher WHERE  id_teacher =#{teacher}
+    </select>
+    <select id="GetAllteacher" resultMap="teacherIF">
+        select * from teacher
+    </select>
+
+
+
+
+    <insert id="insertInfo" parameterType="java.util.List">
+        insert into teacher (id_teacher, name_teacher,introduce_teacher, office_teacher, sex_teacher,email_teacher,tel_teacher,password_teacher)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.teacherid}, #{item.name}, #{item.introduce},#{item.officeplace}, #{item.sex}, #{item.email}, #{item.phone}, #{item.password})
+        </foreach>
+    </insert>
+</mapper>

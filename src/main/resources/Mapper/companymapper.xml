@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="course.graduation.dao.companydao">
+    <resultMap type="course.graduation.model.company" id="companyIF">
+        <id column="id_company" property="companyid" />
+        <result column="introduce_company" property="introduce" />
+        <result column="name_company" property="companyname" />
+        <result column="address_company" property="address" />
+        <result column="right_company" property="right" />
+        <result column="tel_company" property="phone" />
+        <result column="email_company" property="email" />
+        <result column="manager_name" property="managername"/>
+        <result column="recruit_company" property="recruit"/>
+    </resultMap>
+    <!--<select id="GetUser" resultType="course.graduation.model.users">-->
+            <!--select * from users WHERE  id_users =#{userid}-->
+    <!--</select>-->
+    <select id="Getinformation" resultMap="companyIF">
+        select * from company WHERE  id_company =#{companyid}
+    </select>
+    <select id="GetALLRightCompany" resultMap="companyIF">
+        select * from company WHERE  right_company ='yes'
+    </select>
+    <select id="GetALLCompany" resultMap="companyIF">
+        select * from company
+    </select>
+    <select id="GetRecruitCompany" resultMap="companyIF">
+        select * from company where recruit_company ='yes'
+    </select>
+    <update id="changerightno" parameterType="java.lang.String">
+        UPDATE company SET
+        right_company = 'no',
+        recruit_company= 'no'
+        WHERE id_company = #{companyid}
+    </update>
+    <update id="changerightok" parameterType="java.lang.String">
+        UPDATE company SET
+        right_company = 'yes',
+        recruit_company= 'yes'
+        WHERE id_company = #{companyid}
+    </update>
+
+    <update id="changerecruitno" parameterType="java.lang.String">
+        UPDATE company SET
+        recruit_company= 'no'
+        WHERE id_company = #{companyid}
+    </update>
+    <update id="changerecruitok" parameterType="java.lang.String">
+        UPDATE company SET
+        recruit_company= 'yes'
+        WHERE id_company = #{companyid}
+    </update>
+
+
+
+    <insert id="addcompany" parameterType="java.util.List">
+        insert into company (id_company, name_company,introduce_company, address_company, tel_company,email_company,manager_name)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.companyid}, #{item.companyname}, #{item.introduce},#{item.address}, #{item.phone}, #{item.email}, #{item.managername})
+        </foreach>
+    </insert>
+
+
+
+
+</mapper>

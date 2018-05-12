@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="course.graduation.dao.resumedao">
+    <resultMap type="course.graduation.model.resume" id="All">
+        <id column="id_student" property="studentid" />
+        <result column="resume_location" property="resume" />
+        <result column="san_location" property="san" />
+        <result column="summry_location" property="summry"/>
+        <result column="zwjd_location" property="zwjd"/>
+    </resultMap>
+    <select id="isnull" resultMap="All">
+            select * from resume_student WHERE  id_student =#{studentid}
+    </select>
+    <insert id="inertresume" parameterType="course.graduation.model.resume">
+        insert into resume_student (id_student, resume_location)
+        values
+              (#{studentid},#{resume})
+    </insert>
+    <insert id="inertsan" parameterType="course.graduation.model.resume">
+        insert into resume_student (id_student, san_location)
+        values
+        (#{studentid},#{san})
+    </insert>
+    <insert id="inertsummry" parameterType="course.graduation.model.resume">
+        insert into resume_student (id_student, summry_location)
+        values
+        (#{studentid},#{summry})
+    </insert>
+    <insert id="inertzwjd" parameterType="course.graduation.model.resume">
+        insert into resume_student (id_student, zwjd_location)
+        values
+        (#{studentid},#{zwjd})
+    </insert>
+
+
+
+
+    <update id="updateresume" parameterType="course.graduation.model.resume">
+        UPDATE resume_student SET
+        resume_location = #{resume}
+
+        WHERE id_student = #{studentid}
+    </update>
+    <update id="updatesan" parameterType="course.graduation.model.resume">
+        UPDATE resume_student SET
+        san_location = #{san}
+
+        WHERE id_student = #{studentid}
+    </update>
+    <update id="updatesummry" parameterType="course.graduation.model.resume">
+        UPDATE resume_student SET
+        summry_location = #{summry}
+
+        WHERE id_student = #{studentid}
+    </update>
+    <update id="updatezwjd" parameterType="course.graduation.model.resume">
+        UPDATE resume_student SET
+        zwjd_location = #{zwjd}
+
+        WHERE id_student = #{studentid}
+    </update>
+
+
+</mapper>

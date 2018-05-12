@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="course.graduation.dao.studentIFdao">
+    <resultMap type="course.graduation.model.studentIF" id="All">
+        <id column="id_student" property="studentid" />
+        <result column="id_teacher_student" property="teacheridBystudent" />
+        <result column="id_company_student" property="companyidBystudent" />
+        <result column="san_company_student" property="sanbycompany"/>
+        <result column="san_teacher_student" property="sanbyteacher"/>
+        <result column="zj_company_student" property="zjbycompany"/>
+        <result column="zj_teacher_student" property="zjbyteacher"/>
+        <result column="records_student" property="record"/>
+        <result column="mark_student" property="markstudent"/>
+
+    </resultMap>
+
+    <!--<select id="GetUser" resultType="course.graduation.model.users">-->
+            <!--select * from users WHERE  id_users =#{userid}-->
+    <!--</select>-->
+    <select id="studentGetteacher"  resultType="java.lang.String">
+        select id_teacher_student from information_student WHERE  id_student =#{studentid}
+    </select>
+    <select id="companyGetstudent"  resultType="java.lang.String">
+        select id_student from information_student WHERE  id_company_student =#{companyid}
+    </select>
+
+    <select id="GetAll"  resultMap="All">
+        select * from information_student
+    </select>
+
+
+
+
+    <select id="getstudentsid"  resultMap="All">
+        select * from information_student WHERE  id_teacher_student =#{teacherid}
+    </select>
+    <select id="getbystuid"  resultMap="All">
+        select * from information_student WHERE  id_student =#{studentid}
+    </select>
+    <select id="getstudentIF"  resultType="java.lang.String">
+        select id_company_student from information_student WHERE  id_student =#{studentid}
+    </select>
+    <select id="getwork"  resultMap="All">
+        select * from information_student WHERE  mark_student ='yes'
+    </select>
+    <select id="getunwork"  resultMap="All">
+        select * from information_student WHERE  mark_student ='no'
+    </select>
+
+    <update id="setrecord" parameterType="course.graduation.model.studentIF">
+        UPDATE information_student SET
+        records_student = #{record}
+
+        WHERE id_student = #{studentid}
+    </update>
+
+
+
+
+    <update id="sancompany" parameterType="java.lang.String">
+        UPDATE information_student SET
+        san_company_student = 'yes'
+        WHERE id_student = #{studentid}
+    </update>
+
+
+    <update id="zjcompany" parameterType="java.lang.String">
+        UPDATE information_student SET
+        zj_company_student = 'yes'
+
+        WHERE id_student = #{studentid}
+    </update>
+
+    <update id="santeacher" parameterType="java.lang.String">
+        UPDATE information_student SET
+        san_teacher_student = 'yes'
+        WHERE id_student = #{studentid}
+    </update>
+
+    <update id="zjteacher" parameterType="java.lang.String">
+        UPDATE information_student SET
+        zj_teacher_student = 'yes'
+
+        WHERE id_student = #{studentid}
+    </update>
+
+
+    <update id="addrecruit" parameterType="course.graduation.model.studentIF">
+        UPDATE information_student SET
+        id_company_student = #{companyidBystudent},
+        mark_student = 'yes'
+        WHERE id_student = #{studentid}
+    </update>
+
+    <insert id="insertSTrelation" parameterType="java.util.List">
+        insert into information_student (id_student, id_teacher_student)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.studentid}, #{item.teacheridBystudent})
+        </foreach>
+    </insert>
+
+</mapper>
